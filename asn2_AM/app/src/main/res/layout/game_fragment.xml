@@ -1,84 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="60dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="134dp"
-        android:layout_marginEnd="11dp"
-        android:layout_marginBottom="74dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/radioButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        app:srcCompat="@drawable/ic_baseline_navigate_before_24" />
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.example.rickandmortyquiz.game.GameViewModel" />
+    </data>
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="60dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="134dp"
-        android:layout_marginBottom="74dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/radioButton2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        app:srcCompat="@drawable/ic_baseline_navigate_next_24" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <RadioButton
-        android:id="@+id/radioButton"
-        android:layout_width="105dp"
-        android:layout_height="76dp"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="134dp"
-        android:layout_marginEnd="30dp"
-        android:text="TRUE"
-        app:layout_constraintEnd_toStartOf="@+id/radioButton2"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/rnm02" />
 
-    <RadioButton
-        android:id="@+id/radioButton2"
-        android:layout_width="104dp"
-        android:layout_height="74dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="134dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="29dp"
-        android:text="FALSE"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintEnd_toStartOf="@+id/imageView3"
-        app:layout_constraintStart_toEndOf="@+id/radioButton"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        app:layout_constraintVertical_bias="0.0" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/radioTrue"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"
+            tools:layout_editor_absoluteX="0dp">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="178dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="159dp"
-        android:layout_marginBottom="32dp"
-        android:text="Your Score: "
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton" />
+            <TextView
+                android:id="@+id/tv_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{context.getText(viewModel.question)}" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/rnm02" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/right"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{ true ? View.VISIBLE : View.GONE}"
+                android:src="@drawable/right_24"/>
+            <ImageView
+                android:id="@+id/wrong"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{ false ? View.VISIBLE : View.GONE}"
+                android:src="@drawable/wrong_24"/>
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/preButton"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="134dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginBottom="74dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/radioTrue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"
+            app:srcCompat="@drawable/ic_baseline_navigate_before_24"
+            android:onClick="@{() -> viewModel.previousQuestion()}"/>
+
+        <RadioButton
+            android:id="@+id/radioTrue"
+            android:layout_width="105dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="134dp"
+            android:layout_marginEnd="30dp"
+            android:onClick="@{() -> viewModel.answerQuestion(true)}"
+            android:text="TRUE"
+            app:layout_constraintEnd_toStartOf="@+id/radioFalse"
+            app:layout_constraintStart_toEndOf="@+id/preButton"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+        <RadioButton
+            android:id="@+id/radioFalse"
+            android:layout_width="104dp"
+            android:layout_height="74dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="134dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="29dp"
+            android:onClick="@{() -> viewModel.answerQuestion(false)"
+            android:text="FALSE"
+            app:layout_constraintBottom_toTopOf="@+id/textView2"
+            app:layout_constraintEnd_toStartOf="@+id/nextButton"
+            app:layout_constraintStart_toEndOf="@+id/radioTrue"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/nextButton"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="134dp"
+            android:layout_marginBottom="74dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/radioFalse"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"
+            app:srcCompat="@drawable/ic_baseline_navigate_next_24"
+            android:onClick="@{() -> viewModel.nextQuestion()}"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="178dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="159dp"
+            android:layout_marginBottom="32dp"
+            android:text="Your Score: "
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioTrue" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
