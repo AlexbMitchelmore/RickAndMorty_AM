@@ -26,6 +26,10 @@ class GameViewModel : ViewModel() {
     val score: LiveData<Int>
         get() = _score
 
+    private val _score2 = MutableLiveData<Int>()
+    val score2: LiveData<Int>
+        get() = _score2
+
     private fun updateQuestion(){
         _question.value = questionList[currentQuestion].id
     }
